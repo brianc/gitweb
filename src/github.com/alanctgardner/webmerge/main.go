@@ -64,11 +64,7 @@ func newJobConfig(r *http.Request) (*GitConfig, error) {
   if err != nil {
     return nil, err
   }
-  if len(r.Form["repo"]) < 1 {
-    return nil, fmt.Errorf("No repo provided")
-  }
-  repo := r.Form["repo"][0]
-  fmt.Printf("Repo: %v\n", repo)
+  repo := r.FormValue("repo")
   return &GitConfig{oauthCreds: authCookie.Value, repoUrl: repo, email: *user.Email, user: *user.Name}, nil
 }
 
