@@ -26,7 +26,7 @@ func (self *GitMerge) Finish(err error) {
 }
 
 func (self *GitMerge) Result() (string, bool, error) {
-  return self.output.String(), self.isDone, self.err
+  return strings.Replace(self.output.String(), "\n", "<br>", -1), self.isDone, self.err
 }
 
 func (self *GitMerge) Run() error {
