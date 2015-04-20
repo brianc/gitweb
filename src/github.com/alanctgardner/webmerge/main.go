@@ -10,8 +10,6 @@ import (
 )
 
 var (
-  repo_url = "github.com/alanctgardner/git_test_repo.git"
-  branch = "tagging"
   userJobs = make(map[int]GitJob)
   workQueue = make(chan GitJob)
   outputMutex = sync.Mutex{}
@@ -19,7 +17,7 @@ var (
 )
 
 func main() {
-  fmt.Printf("Registering listeners")
+  fmt.Printf("Registering listeners\n")
   http.HandleFunc("/auth/login", authStart)
   http.HandleFunc("/auth/callback", authCallback)
   http.HandleFunc("/auth/status", authStatus)
@@ -28,7 +26,7 @@ func main() {
   http.HandleFunc("/job/status", getJobStatus)
   go jobRunner()
   err := http.ListenAndServe(":8080", nil)
-  fmt.Printf("HTTP server error %v", err)
+  fmt.Printf("HTTP server error %v\n", err)
 }
 
 func jobRunner() {
@@ -66,7 +64,12 @@ func newJobConfig(r *http.Request) (*GitConfig, error) {
   if err != nil {
     return nil, err
   }
-  return &GitConfig{oauthCreds: authCookie.Value, repoUrl: repo_url, email: *user.Email, user: *user.Name}, nil
+  if len(r.Form["repo"]) < 1 {
+    return nil, fmt.Errorf("No repo provided")
+  }
+  repo := r.Form["repo"][0]
+  fmt.Printf("Repo: %v\n", repo)
+  return &GitConfig{oauthCreds: authCookie.Value, repoUrl: repo, email: *user.Email, user: *user.Name}, nil
 }
 
 func getNewJobId() int {
@@ -81,6 +84,9 @@ func getNewJobId() int {
 
 func submitRebase(w http.ResponseWriter, r *http.Request) {
   r.ParseForm()
+  for k, v := range(r.Form) {
+    fmt.Printf("%v: %v\n", k, v)
+  }
   config, err := newJobConfig(r)
   if err != nil {
     http.Error(w, "No oauth cookie configured, please login", 403)

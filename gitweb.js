@@ -4,11 +4,16 @@
 // @version      0.1
 // @description  Gives a rebase+squash button and a fast-forward merge button on Github PRs
 // @author       Alan Gardner
-// @match        https://github.com/alanctgardner/git_test_repo/pull/*
+// @match        https://github.com/*/*/pull/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
 var webmergeUrl = "https://webmerge.agardner.me/";
+
+function getRepo() {
+    var repoParts = window.location.pathname.split("/");
+    return "github.com/"+repoParts[1]+"/"+repoParts[2]+".git";
+}
 
 function checkLoggedIn() {
     GM_xmlhttpRequest({
@@ -51,10 +56,15 @@ function waitForStatus(jobId) {
 function rebaseSquash() {
     var commits = $(".commit-ref:nth-child(3)");
     var branch = commits.text();
-    var msg = $('#webmerge-commit').val;
-    var url = encodeURI(webmergeUrl+"/git/rebase?branch="+branch+"&msg="+msg);
+    var msg = $('#webmerge-commit').val();
+    var repo = getRepo();
+    var url = webmergeUrl+"/git/rebase";
+    url += "?branch=" + encodeURIComponent(branch);
+    url += "&msg=" + encodeURIComponent(msg);
+    url += "&repo=" + encodeURIComponent(repo);
+    var repo = getRepo();
     GM_xmlhttpRequest({
-      method: "GET",
+      method: "POST",
       url: url,
       onload: function(result) {
         var response = JSON.parse(result.response);
@@ -65,10 +75,12 @@ function rebaseSquash() {
 function fastForwardMerge() {
     var commits = $(".commit-ref:nth-child(3)");
     var branch = commits.text();
-    var msg = $('#webmerge-commit').val;
-    var url = encodeURI(webmergeUrl+"/git/merge?branch="+branch);
+    var url = webmergeUrl+"/git/merge";
+    var repo = getRepo();
+    url += "?branch=" + encodeURIComponent(branch);
+    url += "&repo=" + encodeURIComponent(repo);
     GM_xmlhttpRequest({
-      method: "GET",
+      method: "POST",
       url: url,
       onload: function(result) {
         var response = JSON.parse(result.response);
