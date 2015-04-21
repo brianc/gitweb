@@ -77,7 +77,7 @@ func FFMergeBranch(config *GitConfig, branch string, output *bytes.Buffer) error
 
 func RebaseBranch(config *GitConfig, branch string, output *bytes.Buffer) error {
   /* Rebase the current branch against the specified one */
-  mergeCmd := exec.Command("git", "merge", "--ff-only", "origin/" + branch)
+  mergeCmd := exec.Command("git", "rebase", "master")
   mergeCmd.Dir = config.rootDir
   mergeOut, err := mergeCmd.CombinedOutput()
   output.Write(mergeOut)
