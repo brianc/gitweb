@@ -2,6 +2,7 @@ package main
 
 import (
   "bytes"
+  "strings"
 )
 
 /* Merge a branch into master, FF-only, and push the result */
