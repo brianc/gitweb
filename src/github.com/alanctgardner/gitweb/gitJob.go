@@ -23,7 +23,7 @@ type GitConfig struct {
 }
 
 func (config *GitConfig) CreateWorkingDir() error {
-  dir, err := ioutil.TempDir(config.tmpDir, "webmerge")
+  dir, err := ioutil.TempDir(config.tmpDir, "gitweb")
   config.rootDir = dir
   return err
 }
