@@ -49,6 +49,11 @@ func (self *GitRebase) Run() error {
     return err
   }
 
+  err = RebaseBranch(self.config, &self.output)
+  if err != nil {
+    return err
+  }
+
   err = SquashCommits(self.config, self.message, &self.output)
   if err != nil {
     return err

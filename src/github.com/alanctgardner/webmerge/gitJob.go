@@ -47,7 +47,7 @@ func CloneRepo(config *GitConfig, output *bytes.Buffer) error {
   if err != nil {
     return err
   }
-  
+
   fmt.Printf("Configuring user %v \n", config.email)
 
   emailCmd := exec.Command("git", "config", "user.email", config.email)
@@ -75,7 +75,7 @@ func FFMergeBranch(config *GitConfig, branch string, output *bytes.Buffer) error
   return err
 }
 
-func RebaseBranch(config *GitConfig, branch string, output *bytes.Buffer) error {
+func RebaseBranch(config *GitConfig, output *bytes.Buffer) error {
   /* Rebase the current branch against the specified one */
   mergeCmd := exec.Command("git", "rebase", "master")
   mergeCmd.Dir = config.rootDir
