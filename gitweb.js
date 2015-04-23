@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Gives a rebase+squash button and a fast-forward merge button on Github PRs
 // @author       Alan Gardner
-// @match        https://github.com/*/*/pull/*
+// @match        https://github.com/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
@@ -94,6 +94,7 @@ function addLoginButtons() {
     var icon = $("<span class=\"mega-octicon octicon-git-merge branch-action-icon\"></span>");
     var message = $("<div class=\"merge-message\"></div>");
     var details = $("<div class=\"js-details-container\"><h3 class=\"merge-branch-heading\">Merge with WebMerge</h3><p class=\"merge-branch-description\"><a href=\""+webmergeUrl+"/auth/login\">Log in</a> to use WebMerge</p></div>");
+    $(".branch-action").remove();
     box.append(icon);
     box.append(body);
     message.append(details);
@@ -127,6 +128,7 @@ function addMergeButtons(user) {
     var details = $("<div class=\"js-details-container\" id=\"webmerge-box\"><h3 class=\"merge-branch-heading\">Merge with WebMerge</h3><p class=\"merge-branch-description\">Logged in as "+user+"</p></div>");
     var rebaseBtn = $("<input type=\"button\" value=\"Rebase + Squash\" class=\"btn merge-branch-action js-details-target\">");
     var mergeBtn = $("<input type=\"button\" value=\"Merge\" class=\"btn merge-branch-action js-details-target\">");
+    $(".branch-action").remove();
     rebaseBtn.click(addCommitMessage);
     mergeBtn.click(fastForwardMerge);
     message.append(rebaseBtn);
@@ -138,4 +140,14 @@ function addMergeButtons(user) {
     $('#partial-pull-merging').append(box);
 }
 
-$(document).ready(checkLoggedIn);
+$(document).ready(function(){
+    checkLoggedIn();
+    var pushState = history.pushState;
+    history.pushState = function() {
+        pushState.apply(history, arguments);
+        var urlParts = window.location.pathname.split("/");
+        if (urlParts[urlParts.length - 2] == "pull") {
+          checkLoggedIn();
+        }
+    };
+});
