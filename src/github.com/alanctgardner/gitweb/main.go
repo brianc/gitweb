@@ -38,6 +38,7 @@ func jobRunner() {
 }
 
 func getJobStatus(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Access-Control-Allow-Origin", "*")
   outputMutex.Lock()
   defer outputMutex.Unlock()
   job, err := strconv.Atoi(r.FormValue("job"))
@@ -79,6 +80,7 @@ func getNewJobId() int {
 }
 
 func submitRebase(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Access-Control-Allow-Origin", "*")
   r.ParseForm()
   for k, v := range(r.Form) {
     fmt.Printf("%v: %v\n", k, v)
@@ -103,6 +105,7 @@ func submitRebase(w http.ResponseWriter, r *http.Request) {
 
 
 func submitMerge(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Access-Control-Allow-Origin", "*")
   r.ParseForm()
   config, err := newJobConfig(r)
   if err != nil {
