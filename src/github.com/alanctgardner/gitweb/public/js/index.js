@@ -1,4 +1,5 @@
 import React from 'react';
-import { Layout } from 'js/components/layout';
+import { Layout } from 'components/layout';
 
-React.render(<Layout text='boom' />, document.body)
+React.render(<Layout />, document.body)
+
