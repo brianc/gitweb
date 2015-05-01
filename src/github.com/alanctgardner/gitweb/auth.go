@@ -1,22 +1,27 @@
 package main
 
 import (
-  "fmt"
-  "github.com/google/go-github/github"
-  "net/http"
   "encoding/json"
-  "golang.org/x/oauth2"
+  "fmt"
   "math/rand"
+  "net/http"
+  "os"
   "strconv"
+
+  "github.com/google/go-github/github"
+  "golang.org/x/oauth2"
 )
 
+var GITHUB_CLIENT_ID = os.Getenv("GITHUB_CLIENT_ID")
+var GITHUB_CLIENT_SECRET = os.Getenv("GITHUB_CLIENT_SECRET")
+
 var (
-  oauthConf = oauth2.Config {
-    ClientID: "",
-    ClientSecret: "",
-    Scopes: []string{"user", "repo"},
+  oauthConf = oauth2.Config{
+    ClientID:     GITHUB_CLIENT_ID,
+    ClientSecret: GITHUB_CLIENT_SECRET,
+    Scopes:       []string{"user", "repo"},
     Endpoint: oauth2.Endpoint{
-      AuthURL: "https://github.com/login/oauth/authorize",
+      AuthURL:  "https://github.com/login/oauth/authorize",
       TokenURL: "https://github.com/login/oauth/access_token",
     },
   }
@@ -26,8 +31,11 @@ var (
 func authStart(w http.ResponseWriter, r *http.Request) {
   oauthToken := strconv.Itoa(int(rand.Int63()))
   authURL := oauthConf.AuthCodeURL(string(oauthToken), oauth2.AccessTypeOnline)
+  fmt.Printf("AuthURL: %s\n", authURL)
+
   userOauthNonces[string(oauthToken)] = true
-  fmt.Printf("oauth state:" + string(oauthToken))
+  fmt.Printf("oauth state: %s\n", string(oauthToken))
+
   http.Redirect(w, r, authURL, 307)
 }
 
@@ -47,17 +55,20 @@ func authCallback(w http.ResponseWriter, r *http.Request) {
     w.Write(resp)
     return
   }
-  authCookie := http.Cookie {
-    Name: "oauth",
+
+  fmt.Printf("Access token: %s", tok)
+
+  authCookie := http.Cookie{
+    Name:  "oauth",
     Value: tok.AccessToken,
-    Path: "/",
+    Path:  "/",
   }
   http.SetCookie(w, &authCookie)
   resp, _ := json.Marshal(map[string]interface{}{"sucess": true})
   w.Write(resp)
 }
 
-func getLoggedInUser(oauthState string) (*github.User, error){
+func getLoggedInUser(oauthState string) (*github.User, error) {
   resp, err := http.Get(fmt.Sprintf("https://api.github.com/user?access_token=%v", oauthState))
   if err != nil || resp.StatusCode != 200 {
     fmt.Printf("Status: %v", resp)

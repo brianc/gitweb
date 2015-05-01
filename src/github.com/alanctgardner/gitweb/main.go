@@ -1,19 +1,20 @@
 package main
 
 import (
-  "fmt"
-  "net/http"
   "encoding/json"
+  "fmt"
+  "log"
   "math/rand"
+  "net/http"
   "strconv"
   "sync"
 )
 
 var (
-  userJobs = make(map[int]GitJob)
-  workQueue = make(chan GitJob)
+  userJobs    = make(map[int]GitJob)
+  workQueue   = make(chan GitJob)
   outputMutex = sync.Mutex{}
-  gitRoot = "/tmp/gitRepo"
+  gitRoot     = "/tmp/gitRepo"
 )
 
 func main() {
@@ -24,9 +25,12 @@ func main() {
   http.HandleFunc("/git/rebase", submitRebase)
   http.HandleFunc("/git/merge", submitMerge)
   http.HandleFunc("/job/status", getJobStatus)
+  http.Handle("/", http.FileServer(http.Dir("public")))
+
   go jobRunner()
-  err := http.ListenAndServe(":8080", nil)
-  fmt.Printf("HTTP server error %v\n", err)
+
+  fmt.Printf("Listening on :8080")
+  log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func jobRunner() {
@@ -52,7 +56,7 @@ func getJobStatus(w http.ResponseWriter, r *http.Request) {
     return
   }
   output, isDone, err := jobStatus.Result()
-  jobJson, _ := json.Marshal(map[string]interface{}{"output":output, "finished": isDone, "error": err})
+  jobJson, _ := json.Marshal(map[string]interface{}{"output": output, "finished": isDone, "error": err})
   w.Write(jobJson)
 }
 
@@ -82,7 +86,7 @@ func getNewJobId() int {
 func submitRebase(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Access-Control-Allow-Origin", "*")
   r.ParseForm()
-  for k, v := range(r.Form) {
+  for k, v := range r.Form {
     fmt.Printf("%v: %v\n", k, v)
   }
   config, err := newJobConfig(r)
@@ -102,7 +106,6 @@ func submitRebase(w http.ResponseWriter, r *http.Request) {
   fmt.Printf("JobID: %v %v\n", string(jobJson), jobId)
   w.Write(jobJson)
 }
-
 
 func submitMerge(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Access-Control-Allow-Origin", "*")
