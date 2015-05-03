@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 var paths = ['/auth', '/git', '/job'];
 paths.forEach(function(path) {
   app.use(path, function(req, res) {
-    proxy.web(req, res, { target: 'http://localhost:8080' });
+    proxy.web(req, res, { target: 'http://localhost:8080' + path });
   });
 });
 

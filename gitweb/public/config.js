@@ -19,17 +19,22 @@ System.config({
   "map": {
     "$": "github:components/jquery@2.1.3",
     "async": "npm:async@0.9.0",
-    "babel": "npm:babel-core@5.1.13",
-    "babel-runtime": "npm:babel-runtime@5.1.13",
+    "babel": "npm:babel-core@5.2.6",
+    "babel-runtime": "npm:babel-runtime@5.2.6",
+    "classnames": "npm:classnames@2.0.0",
     "components/jquery": "github:components/jquery@2.1.3",
-    "core-js": "npm:core-js@0.9.4",
-    "fluxed": "npm:fluxed@0.6.0",
-    "fluxed/bus": "npm:fluxed@0.6.0/src/bus",
-    "fluxed/store": "npm:fluxed@0.6.0/src/store",
+    "core-js": "npm:core-js@0.9.6",
+    "fluxed": "npm:fluxed@0.8.1",
+    "fluxed/bus": "npm:fluxed@0.8.1/src/bus",
+    "fluxed/store": "npm:fluxed@0.8.1/src/store",
     "lodash": "npm:lodash-node@3.8.0",
+    "lodash-node": "npm:lodash-node@3.8.0",
     "moment": "npm:moment@2.10.2",
     "react": "npm:react@0.13.2",
     "react-router": "npm:react-router@0.13.3",
+    "github:jspm/nodelibs-assert@0.1.0": {
+      "assert": "npm:assert@1.3.0"
+    },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.2.1"
     },
@@ -54,6 +59,9 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:assert@1.3.0": {
+      "util": "npm:util@0.10.3"
+    },
     "npm:async@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
@@ -62,7 +70,10 @@ System.config({
       "ieee754": "npm:ieee754@1.1.4",
       "is-array": "npm:is-array@1.0.1"
     },
-    "npm:core-js@0.9.4": {
+    "npm:classnames@2.0.0": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:core-js@0.9.6": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:core-util-is@1.0.1": {
@@ -80,7 +91,7 @@ System.config({
     "npm:events-browserify@0.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:fluxed@0.6.0": {
+    "npm:fluxed@0.8.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:inherits@2.0.1": {

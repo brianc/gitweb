@@ -5,6 +5,8 @@ import Router from 'react-router';
 import github from 'github';
 var { Navigation } = Router;
 
+
+import classNames from 'classnames';
 var RepoListItem = React.createClass({
   mixins: [Navigation],
   onClick(e) {
@@ -21,25 +23,44 @@ var RepoListItem = React.createClass({
     this.transitionTo('repo-view', params)
   },
   render() {
-    var repo = this.props.repo;
+    let { repo, active } = this.props;
+    let classes = classNames({
+      'list-group-item': true,
+      active
+    });
     return (
-      <div onClick={this.onClick}>
-        <a href={repo.html_url} onClick={this.onClick}>{repo.full_name}</a>
-      </div>
+      <a className={classes} href={repo.html_url} onClick={this.onClick}>{repo.full_name}</a>
     );
   }
 });
 
+import repoStore from 'stores/repo-store';
 var RepoList = React.createClass({
+  mixins: [bus.mixin],
+  getInitialState() {
+    return {
+      active: repoStore.active()
+    };
+  },
+  on: {
+    'repo-store-change'(msg) {
+      console.log('changed', msg.store.active())
+      this.setState({ active: msg.store.active() });
+    }
+  },
+  isActive(repo) {
+    let { owner, name } = this.state.active;
+    return repo.owner.login == owner && repo.name == name;
+  },
   renderRepos() {
-    return this.props.repos.map(function(repo, i) {
+    return this.props.repos.map((repo, i) => {
       var key = `repo-${i}`;
-      return (<RepoListItem key={key} repo={repo} />);
+      return (<RepoListItem key={key} repo={repo} active={this.isActive(repo) }/>);
     });
   },
   render() {
     return (
-      <div>{this.renderRepos()}</div>
+      <div className='list-group'>{this.renderRepos()}</div>
     );
   }
 });

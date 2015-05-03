@@ -1,6 +1,2 @@
 jspm_packages/
-bin/
-pkg/
-src/github.com/google/
-src/golang.org/
-src/github.com/alanctgardner/gitweb/gitweb
+gitweb/gitweb
