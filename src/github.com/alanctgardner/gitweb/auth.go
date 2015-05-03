@@ -20,7 +20,7 @@ var (
 	oauthConf = oauth2.Config{
 		ClientID:     GITHUB_CLIENT_ID,
 		ClientSecret: GITHUB_CLIENT_SECRET,
-		Scopes:       []string{"user", "repo"},
+		Scopes:       []string{"user", "repo", "read:org"},
 		Endpoint: oauth2.Endpoint{
 			AuthURL:  "https://github.com/login/oauth/authorize",
 			TokenURL: "https://github.com/login/oauth/access_token",

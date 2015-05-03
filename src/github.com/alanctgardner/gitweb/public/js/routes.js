@@ -23,7 +23,7 @@ var TopNav = React.createClass({
       <div className='top-nav'>{contents}</div>
     );
   }
-})
+});
 
 var App = React.createClass({
   getInitialState() {
@@ -40,7 +40,7 @@ var App = React.createClass({
       </div>
     );
   }
-})
+});
 
 var Authenticated = React.createClass({
   statics: {
@@ -60,13 +60,13 @@ var Authenticated = React.createClass({
       </div>
     );
   }
-})
+});
 
 var Home = React.createClass({
   render() {
     return (<div>home</div>)
   }
-})
+});
 
 var Login = React.createClass({
   render() {

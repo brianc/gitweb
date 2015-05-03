@@ -15,15 +15,14 @@ export var RepoPanel = React.createClass({
   getInitialState() {
     return {
       pulls: []
-    }
+    };
   },
   getPulls(owner, name) {
     github.getPulls(owner, name, (err, pulls) => {
       if (err) {
         return console.error(err);
       }
-      console.log(pulls)
-      this.setState({pulls})
+      this.setState({ pulls });
     });
   },
   componentDidMount() {

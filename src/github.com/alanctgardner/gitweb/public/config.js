@@ -18,6 +18,7 @@ System.config({
 System.config({
   "map": {
     "$": "github:components/jquery@2.1.3",
+    "async": "npm:async@0.9.0",
     "babel": "npm:babel-core@5.1.13",
     "babel-runtime": "npm:babel-runtime@5.1.13",
     "components/jquery": "github:components/jquery@2.1.3",
@@ -25,6 +26,8 @@ System.config({
     "fluxed": "npm:fluxed@0.6.0",
     "fluxed/bus": "npm:fluxed@0.6.0/src/bus",
     "fluxed/store": "npm:fluxed@0.6.0/src/store",
+    "lodash": "npm:lodash-node@3.8.0",
+    "moment": "npm:moment@2.10.2",
     "react": "npm:react@0.13.2",
     "react-router": "npm:react-router@0.13.3",
     "github:jspm/nodelibs-buffer@0.1.0": {
@@ -49,6 +52,9 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:async@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:buffer@3.2.1": {
@@ -87,6 +93,12 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "source-map": "npm:source-map@0.1.31"
+    },
+    "npm:lodash-node@3.8.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:moment@2.10.2": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"

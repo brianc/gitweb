@@ -2,6 +2,7 @@ import React from 'react';
 import {http} from 'http'
 import bus from 'fluxed/bus';
 import Router from 'react-router';
+import github from 'github';
 var { Navigation } = Router;
 
 var RepoListItem = React.createClass({
@@ -50,16 +51,11 @@ export var GithubPanel = React.createClass({
     };
   },
   componentDidMount() {
-    var url = `https://api.github.com/user/repos?access_token=${this.props.token}&per_page=100`;
-    http.get(url, (err, res) => {
-      var repos = res.map(repo => {
-        repo.updated_at = Date.parse(repo.updated_at);
-        return repo;
-      }).sort((a, b) => {
-        return b.updated_at - a.updated_at;
-      });
-
-      this.setState({ repos:  repos });
+    github.getRepos((err, repos) => {
+      if (err) {
+        return console.log('error fetching repos', err);
+      }
+      this.setState({ repos });
     });
   },
   render() {
