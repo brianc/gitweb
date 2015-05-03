@@ -18,6 +18,13 @@
 html, body { .fill; }
 html, body, h1, h2, h3, h4, h5 { margin: 0; padding: 0; border: 0; }
 
+.list-group-item {
+  cursor: pointer;
+  &.active {
+    cursor: default;
+  }
+}
+
 .app {
   .flexbox(column);
   .fill;

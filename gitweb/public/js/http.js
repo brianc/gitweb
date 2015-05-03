@@ -5,7 +5,7 @@ var request = function (method, path, body, cb) {
     return cb(null, JSON.parse(xhr.responseText), xhr);
   }
   xhr.open(method, path);
-  xhr.setRequestHeader('Accept', 'application/vnd.github.moondragon+json')
+  xhr.setRequestHeader('Accept', 'application/vnd.github.moondragon.full+json')
   xhr.send(body ? JSON.stringify(body) : null);
 };
 

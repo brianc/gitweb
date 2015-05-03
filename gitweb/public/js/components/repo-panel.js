@@ -1,12 +1,22 @@
 import React from 'react';
 import {http} from 'http';
 import github from 'github';
+import bus from 'fluxed/bus';
 
 var PullPanel = React.createClass({
   render() {
     var pull = this.props.pull;
+    console.log(pull)
     return (
-      <div>{pull.title}</div>
+      <div className='panel panel-default'>
+        <div className='panel-heading'>
+          <h3 className='panel-title'>
+            <a href={pull.html_url}>{pull.title}</a>
+          </h3>
+        </div>
+        <div className='panel-body' dangerouslySetInnerHTML={{__html: pull.body_html}}>
+        </div>
+      </div>
     );
   }
 });
@@ -18,6 +28,8 @@ export var RepoPanel = React.createClass({
     };
   },
   getPulls(owner, name) {
+    let msg = { repo: { owner, name } };
+    bus.emit('active-repo-change', msg);
     github.getPulls(owner, name, (err, pulls) => {
       if (err) {
         return console.error(err);
@@ -42,9 +54,12 @@ export var RepoPanel = React.createClass({
   },
   render() {
     let params = this.props.params;
+    let githubHref = `https://github.com/${params.owner}/${params.name}`;
     return (
       <div>
-        <div>Repo here: {params.id} {params.owner}/{params.name}</div>
+        <h1>
+          <a href={githubHref}>{params.owner}/{params.name}</a>
+        </h1>
         <div>
           {this.renderPulls()}
         </div>

@@ -9,18 +9,26 @@ import authStore from 'stores/auth-store';
 var TopNav = React.createClass({
   renderLoggedOut() {
     return (
-      <a href='/auth/login'>Login</a>
+      <li>
+        <a href='/auth/login'>Login</a>
+      </li>
     );
   },
   renderLoggedIn() {
     return (
+      <li>
         <a href='/auth/logout'>logout</a>
+      </li>
     );
   },
   render() {
     var contents = this.props.token ? this.renderLoggedIn() : this.renderLoggedOut();
     return (
-      <div className='top-nav'>{contents}</div>
+      <div className='navbar navbar-default navbar-static-top top-nav'>
+        <ul className='nav navbar-nav pull-right'>
+          {contents}
+        </ul>
+      </div>
     );
   }
 });
