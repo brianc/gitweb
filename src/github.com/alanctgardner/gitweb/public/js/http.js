@@ -4,6 +4,8 @@ var request = function (method, path, body, cb) {
     if (xhr.readyState != 4) return;
     return cb(null, JSON.parse(xhr.responseText));
   }
+  alert('hi')
+  xhr.setRequestHeader('accept', 'application/vnd.github.moondragon+json')
   xhr.open(method, path);
   xhr.send(body ? JSON.stringify(body) : null);
 };

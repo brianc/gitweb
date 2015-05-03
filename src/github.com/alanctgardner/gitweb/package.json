@@ -18,6 +18,11 @@
     }
   },
   "dependencies": {
+    "express": "^4.12.3",
+    "http-proxy": "^1.11.1",
     "jspm": "^0.15.5"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/.bin/jspm install"
   }
 }

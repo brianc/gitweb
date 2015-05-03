@@ -27,9 +27,6 @@ System.config({
     "fluxed/store": "npm:fluxed@0.6.0/src/store",
     "react": "npm:react@0.13.2",
     "react-router": "npm:react-router@0.13.3",
-    "github:jspm/nodelibs-assert@0.1.0": {
-      "assert": "npm:assert@1.3.0"
-    },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.2.1"
     },
@@ -54,16 +51,10 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:assert@1.3.0": {
-      "util": "npm:util@0.10.3"
-    },
     "npm:buffer@3.2.1": {
       "base64-js": "npm:base64-js@0.0.8",
       "ieee754": "npm:ieee754@1.1.4",
       "is-array": "npm:is-array@1.0.1"
-    },
-    "npm:classnames@1.1.4": {
-      "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
     "npm:core-js@0.9.4": {
       "process": "github:jspm/nodelibs-process@0.1.1"
@@ -99,13 +90,6 @@ System.config({
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
-    },
-    "npm:react-router@0.13.2": {
-      "classnames": "npm:classnames@1.1.4",
-      "object-assign": "npm:object-assign@2.0.0",
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "qs": "npm:qs@2.4.1",
-      "react": "npm:react@0.13.2"
     },
     "npm:react-router@0.13.3": {
       "object-assign": "npm:object-assign@2.0.0",
