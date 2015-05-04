@@ -1,27 +1,11 @@
 import React from 'react';
-import {http} from 'http';
-import github from 'github';
+import moment from 'moment';
 import bus from 'fluxed/bus';
 
-var PullPanel = React.createClass({
-  render() {
-    var pull = this.props.pull;
-    console.log(pull)
-    return (
-      <div className='panel panel-default'>
-        <div className='panel-heading'>
-          <h3 className='panel-title'>
-            <a href={pull.html_url}>{pull.title}</a>
-          </h3>
-        </div>
-        <div className='panel-body' dangerouslySetInnerHTML={{__html: pull.body_html}}>
-        </div>
-      </div>
-    );
-  }
-});
+import github from 'github';
 
-export var RepoPanel = React.createClass({
+export default React.createClass({
+  name: 'RepoPanel',
   getInitialState() {
     return {
       pulls: []
@@ -49,18 +33,36 @@ export var RepoPanel = React.createClass({
   renderPulls() {
     return this.state.pulls.map(pull => {
       let key = 'pull-' + pull.id;
-      return <PullPanel key={key} pull={pull} />
+      console.log(pull)
+      let updated = moment(pull.created_at).fromNow();
+      return (
+        <div key={key} className='panel panel-default pull-panel'>
+          <div className='panel-heading'>
+            <h3 className='panel-title'>
+              <a href={pull.html_url}>@{pull.user.login} - {pull.title}</a>
+            </h3>
+            <div className='pull-right text-muted'>{updated}</div>
+          </div>
+          <div className='panel-body'>
+            <div className='pull-panel-body' dangerouslySetInnerHTML={{__html: pull.body_html || ''}}>
+            </div>
+            <div className='pull-panel-links'>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      );
     });
   },
   render() {
-    let params = this.props.params;
-    let githubHref = `https://github.com/${params.owner}/${params.name}`;
+    let { owner, name } = this.props.params;
+    let githubHref = `https://github.com/${owner}/${name}`;
     return (
-      <div>
-        <h1>
-          <a href={githubHref}>{params.owner}/{params.name}</a>
-        </h1>
-        <div>
+      <div className='repo-panel'>
+        <h2 className='repo-panel-header'>
+          <a href={githubHref}>{owner}/{name}</a>
+        </h2>
+        <div className='repo-panel-pull-list'>
           {this.renderPulls()}
         </div>
       </div>

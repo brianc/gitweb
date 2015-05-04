@@ -1,10 +1,10 @@
 import React from 'react';
 import Router from 'react-router';
 var { Route, RouteHandler } = Router;
-import { GithubPanel } from 'components/github-panel';
-import { RepoPanel } from 'components/repo-panel';
 
 import authStore from 'stores/auth-store';
+import GithubPanel from 'components/github-panel';
+import RepoPanel from 'components/repo-panel';
 
 var TopNav = React.createClass({
   renderLoggedOut() {
